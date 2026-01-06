@@ -1,0 +1,20 @@
+{
+  "name": "tournament-tracker",
+  "version": "1.0.0",
+  "description": "Gaming Tournament Tracker - CS340 Project Step 3",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "production": "forever start app.js",
+    "stop": "forever stop app.js",
+    "restart": "forever restart app.js",
+    "list": "forever list"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "forever": "^1.0.1",
+    "node": "^25.1.0",
+    "production": "^0.0.2"
+  }
+}

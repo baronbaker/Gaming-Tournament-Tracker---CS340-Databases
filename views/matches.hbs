@@ -1,0 +1,100 @@
+<section>
+    <h2>Manage Matches</h2>
+
+    <!-- READ -->
+    <h3>Browse Matches (READ)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>matchID</th>
+                <th>Tournament</th>
+                <th>Round</th>
+                <th>Match Date</th>
+                <th>Status</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if matches.length}}
+                {{#each matches}}
+                <tr>
+                    <td>{{matchID}}</td>
+                    <td>{{tournamentTitle}} (ID {{tournamentID}})</td>
+                    <td>{{round}}</td>
+                    <td>{{matchDate}}</td>
+                    <td>{{status}}</td>
+                    <td>
+                        <form method="POST" action="/matches/delete">
+                            <input type="hidden" name="matchID" value="{{matchID}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            {{else}}
+                <tr><td colspan="6">No matches found.</td></tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- CREATE -->
+    <h3>Add New Match (CREATE)</h3>
+    <form id="add-match-form" method="POST" action="/matches/add" class="form-grid">
+        <label for="add-tournamentID">Tournament:</label>
+        <select id="add-tournamentID" name="tournamentID" required>
+            <option value="">Select a tournament</option>
+            {{#each tournamentsList}}
+                <option value="{{tournamentID}}">{{tournamentTitle}} (ID {{tournamentID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="add-round">Round:</label>
+        <input type="number" id="add-round" name="roundInput" required>
+
+        <label for="add-matchDate">Match Date:</label>
+        <input type="datetime-local" id="add-matchDate" name="matchDateInput">
+
+        <label for="add-status">Status:</label>
+        <select id="add-status" name="statusInput">
+            <option value="Scheduled">Scheduled</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <button type="submit">Add Match</button>
+    </form>
+
+    <hr>
+
+    <!-- UPDATE -->
+    <h3>Update Match (UPDATE)</h3>
+    <p>Enter a <code>matchID</code> and any fields you want to update.</p>
+    <form id="update-match-form" method="POST" action="/matches/update" class="form-grid">
+        <label for="update-matchID">matchID:</label>
+        <input type="number" id="update-matchID" name="matchID" required>
+
+        <label for="update-tournamentID">New Tournament:</label>
+        <select id="update-tournamentID" name="tournamentID">
+            <option value="">(no change)</option>
+            {{#each tournamentsList}}
+                <option value="{{tournamentID}}">{{tournamentTitle}} (ID {{tournamentID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="update-round">New Round:</label>
+        <input type="number" id="update-round" name="roundInput">
+
+        <label for="update-matchDate">New Match Date:</label>
+        <input type="datetime-local" id="update-matchDate" name="matchDateInput">
+
+        <label for="update-status">New Status:</label>
+        <select id="update-status" name="statusInput">
+            <option value="">(no change)</option>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Completed">Completed</option>
+        </select>
+
+        <button type="submit">Update Match</button>
+    </form>
+</section>

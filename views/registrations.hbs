@@ -1,0 +1,89 @@
+<section>
+    <h2>Manage Registrations</h2>
+
+    <!-- READ -->
+    <h3>Browse Registrations (READ)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>registrationID</th>
+                <th>Player</th>
+                <th>Tournament</th>
+                <th>Registration Date</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if registrations.length}}
+                {{#each registrations}}
+                <tr>
+                    <td>{{registrationID}}</td>
+                    <td>{{playerName}} (ID {{playerID}})</td>
+                    <td>{{tournamentTitle}} (ID {{tournamentID}})</td>
+                    <td>{{registrationDate}}</td>
+                    <td>
+                        <form method="POST" action="/registrations/delete">
+                            <input type="hidden" name="registrationID" value="{{registrationID}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            {{else}}
+                <tr><td colspan="5">No registrations found.</td></tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- CREATE -->
+    <h3>Add New Registration (CREATE)</h3>
+    <form id="add-registration-form" method="POST" action="/registrations/add" class="form-grid">
+        <label for="add-playerID">Player:</label>
+        <select id="add-playerID" name="playerID" required>
+            <option value="">Select a player</option>
+            {{#each playersList}}
+                <option value="{{playerID}}">{{playerName}} (ID {{playerID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="add-tournamentID">Tournament:</label>
+        <select id="add-tournamentID" name="tournamentID" required>
+            <option value="">Select a tournament</option>
+            {{#each tournamentsList}}
+                <option value="{{tournamentID}}">{{tournamentTitle}} (ID {{tournamentID}})</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Add Registration</button>
+    </form>
+
+    <hr>
+
+    <!-- UPDATE -->
+    <h3>Update Registration (UPDATE)</h3>
+    <p>Change which player is registered for which tournament.</p>
+    <form id="update-registration-form" method="POST" action="/registrations/update" class="form-grid">
+        <label for="update-registrationID">registrationID:</label>
+        <input type="number" id="update-registrationID" name="registrationID" required>
+
+        <label for="update-playerID">New Player (optional):</label>
+        <select id="update-playerID" name="playerID">
+            <option value="">(no change)</option>
+            {{#each playersList}}
+                <option value="{{playerID}}">{{playerName}} (ID {{playerID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="update-tournamentID">New Tournament (optional):</label>
+        <select id="update-tournamentID" name="tournamentID">
+            <option value="">(no change)</option>
+            {{#each tournamentsList}}
+                <option value="{{tournamentID}}">{{tournamentTitle}} (ID {{tournamentID}})</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Update Registration</button>
+    </form>
+</section>

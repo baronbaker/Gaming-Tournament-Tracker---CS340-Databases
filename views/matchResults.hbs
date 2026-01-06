@@ -1,0 +1,110 @@
+<section>
+    <h2>Manage Match Results</h2>
+
+    <!-- READ -->
+    <h3>Browse Match Results (READ)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>resultID</th>
+                <th>Match</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Result</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if results.length}}
+                {{#each results}}
+                <tr>
+                    <td>{{resultID}}</td>
+                    <td>{{tournamentTitle}} – Round {{round}} (matchID {{matchID}})</td>
+                    <td>{{playerName}} (ID {{playerID}})</td>
+                    <td>{{score}}</td>
+                    <td>{{result}}</td>
+                    <td>
+                        <form method="POST" action="/match-results/delete">
+                            <input type="hidden" name="resultID" value="{{resultID}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            {{else}}
+                <tr><td colspan="6">No match results found.</td></tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- CREATE -->
+    <h3>Add New Match Result (CREATE)</h3>
+    <form id="add-result-form" method="POST" action="/match-results/add" class="form-grid">
+        <label for="add-matchID">Match:</label>
+        <select id="add-matchID" name="matchID" required>
+            <option value="">Select a match</option>
+            {{#each matchesList}}
+                <option value="{{matchID}}">{{matchLabel}} (ID {{matchID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="add-playerID">Player:</label>
+        <select id="add-playerID" name="playerID" required>
+            <option value="">Select a player</option>
+            {{#each playersList}}
+                <option value="{{playerID}}">{{playerName}} (ID {{playerID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="add-score">Score:</label>
+        <input type="number" id="add-score" name="scoreInput" required>
+
+        <label for="add-result">Result:</label>
+        <select id="add-result" name="resultInput">
+            <option value="Win">Win</option>
+            <option value="Loss">Loss</option>
+        </select>
+
+        <button type="submit">Add Result</button>
+    </form>
+
+    <hr>
+
+    <!-- UPDATE -->
+    <h3>Update Match Result (UPDATE)</h3>
+    <p>Enter a <code>resultID</code> and fields to update.</p>
+    <form id="update-result-form" method="POST" action="/match-results/update" class="form-grid">
+        <label for="update-resultID">resultID:</label>
+        <input type="number" id="update-resultID" name="resultID" required>
+
+        <label for="update-matchID">New Match:</label>
+        <select id="update-matchID" name="matchID">
+            <option value="">(no change)</option>
+            {{#each matchesList}}
+                <option value="{{matchID}}">{{matchLabel}} (ID {{matchID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="update-playerID">New Player:</label>
+        <select id="update-playerID" name="playerID">
+            <option value="">(no change)</option>
+            {{#each playersList}}
+                <option value="{{playerID}}">{{playerName}} (ID {{playerID}})</option>
+            {{/each}}
+        </select>
+
+        <label for="update-score">New Score:</label>
+        <input type="number" id="update-score" name="scoreInput">
+
+        <label for="update-result">New Result:</label>
+        <select id="update-result" name="resultInput">
+            <option value="">(no change)</option>
+            <option value="Win">Win</option>
+            <option value="Loss">Loss</option>
+        </select>
+
+        <button type="submit">Update Result</button>
+    </form>
+</section>

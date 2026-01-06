@@ -1,0 +1,77 @@
+<section>
+    <h2>Manage Players</h2>
+
+    <!-- READ -->
+    <h3>Browse Players (READ)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>playerID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Join Date</th>
+                <th>Rank</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if players.length}}
+                {{#each players}}
+                <tr>
+                    <td>{{playerID}}</td>
+                    <td>{{username}}</td>
+                    <td>{{email}}</td>
+                    <td>{{joinDate}}</td>
+                    <td>{{#if rank}}{{rank}}{{else}}(none){{/if}}</td>
+                    <td>
+                        <form method="POST" action="/players/delete">
+                            <input type="hidden" name="playerID" value="{{playerID}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            {{else}}
+                <tr><td colspan="6">No players found.</td></tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- CREATE -->
+    <h3>Add New Player (CREATE)</h3>
+    <form id="add-player-form" method="POST" action="/players/add" class="form-grid">
+        <label for="add-username">Username:</label>
+        <input type="text" id="add-username" name="usernameInput" required>
+
+        <label for="add-email">Email:</label>
+        <input type="email" id="add-email" name="emailInput" required>
+
+        <label for="add-rank">Rank:</label>
+        <input type="text" id="add-rank" name="rankInput" placeholder="Gold / Silver / Bronze">
+
+        <button type="submit">Add Player</button>
+    </form>
+
+    <hr>
+
+    <!-- UPDATE -->
+    <h3>Update Player (UPDATE)</h3>
+    <p>Enter a <code>playerID</code> and any fields you want to update (leave blank to keep existing).</p>
+    <form id="update-player-form" method="POST" action="/players/update" class="form-grid">
+        <label for="update-playerID">playerID:</label>
+        <input type="number" id="update-playerID" name="playerID" required>
+
+        <label for="update-username">New Username:</label>
+        <input type="text" id="update-username" name="usernameInput">
+
+        <label for="update-email">New Email:</label>
+        <input type="email" id="update-email" name="emailInput">
+
+        <label for="update-rank">New Rank:</label>
+        <input type="text" id="update-rank" name="rankInput">
+
+        <button type="submit">Update Player</button>
+    </form>
+</section>

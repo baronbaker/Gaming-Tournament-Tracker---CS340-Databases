@@ -1,0 +1,91 @@
+<section>
+    <h2>Manage Tournaments</h2>
+
+    <!-- READ -->
+    <h3>Browse Tournaments (READ)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>tournamentID</th>
+                <th>Title</th>
+                <th>Game</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Max Players</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if tournaments.length}}
+                {{#each tournaments}}
+                <tr>
+                    <td>{{tournamentID}}</td>
+                    <td>{{title}}</td>
+                    <td>{{game}}</td>
+                    <td>{{startDate}}</td>
+                    <td>{{endDate}}</td>
+                    <td>{{maxPlayers}}</td>
+                    <td>
+                        <form method="POST" action="/tournaments/delete">
+                            <input type="hidden" name="tournamentID" value="{{tournamentID}}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            {{else}}
+                <tr><td colspan="7">No tournaments found.</td></tr>
+            {{/if}}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <!-- CREATE -->
+    <h3>Add New Tournament (CREATE)</h3>
+    <form id="add-tournament-form" method="POST" action="/tournaments/add" class="form-grid">
+        <label for="add-title">Title:</label>
+        <input type="text" id="add-title" name="titleInput" required>
+
+        <label for="add-game">Game:</label>
+        <input type="text" id="add-game" name="gameInput" required>
+
+        <label for="add-startDate">Start Date:</label>
+        <input type="date" id="add-startDate" name="startDateInput" required>
+
+        <label for="add-endDate">End Date:</label>
+        <input type="date" id="add-endDate" name="endDateInput" required>
+
+        <label for="add-maxPlayers">Max Players:</label>
+        <input type="number" id="add-maxPlayers" name="maxPlayersInput" required>
+
+        <button type="submit">Add Tournament</button>
+    </form>
+
+    <hr>
+
+    <!-- UPDATE -->
+    <h3>Update Tournament (UPDATE)</h3>
+    <p>Enter a <code>tournamentID</code> and any fields you want to update (blank = no change).</p>
+    <form id="update-tournament-form" method="POST" action="/tournaments/update" class="form-grid">
+        <label for="update-tournamentID">tournamentID:</label>
+        <input type="number" id="update-tournamentID" name="tournamentID" required>
+
+        <label for="update-title">New Title:</label>
+        <input type="text" id="update-title" name="titleInput">
+
+        <label for="update-game">New Game:</label>
+        <input type="text" id="update-game" name="gameInput">
+
+        <label for="update-startDate">New Start Date:</label>
+        <input type="date" id="update-startDate" name="startDateInput">
+
+        <label for="update-endDate">New End Date:</label>
+        <input type="date" id="update-endDate" name="endDateInput">
+
+        <label for="update-maxPlayers">New Max Players:</label>
+        <input type="number" id="update-maxPlayers" name="maxPlayersInput">
+
+        <button type="submit">Update Tournament</button>
+    </form>
+</section>
